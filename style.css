@@ -1,0 +1,61 @@
+body, h1, h2, h3, p {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+header {
+    font-size: 3rem;
+    padding: 3rem;
+}
+
+.book-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.book {
+    width: 15rem;
+    height: 20rem;
+    border: 2px solid black;
+    border-radius: 10px;
+
+    position: relative;
+}
+
+.pages {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.read {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.delete {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.required:after {
+    content:" *";
+    color: red;
+}
