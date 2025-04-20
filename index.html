@@ -8,26 +8,58 @@
     <title>Library</title>
 </head>
 <body>
-    <header>Library</header>
+    <header>MangaBase</header>
     <dialog>
-        <button autofocus class="close">Close</button>
+        
         <form method="post">
-            <label for="title" class="required">Title</label>
-            <input type="text" id="title" name="title" required>
+            <button autofocus class="close">x</button>
+            <div class="section">
+                <label for="title" class="required">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
 
-            <label for="author" class="required">Author</label>
-            <input type="text" id="author" name="author" required>
+            <div class="section">
+                <label for="author" class="required">Author:</label>
+                <input type="text" id="author" name="author" required>
+            </div>
 
-            <label for="chapters" class="required">Chapters</label>
-            <input type="number" id="chapters" name="chapters" min="1" required>
+            <div class="section">
+                <label for="chapters" class="required">Chapters:</label>
+                <input type="number" id="chapters" name="chapters" min="1" required>
+            </div>
 
-            <label for="read">Finished?</label>
-            <input type="checkbox" id="read" name="read">
+            <div class="section">
+                <label for="image">Image URL:</label>
+                <input type="text" id="image" name="image" placeholder="(optional)">
+            </div>
+
+            <div class="section">
+                <fieldset>
+                    <legend>Status:</legend>
+
+                    <div class="status-container">
+                        <div class="radio">
+                            <input type="radio" id="unread" name="radio" value="unread" checked>
+                            <label for="unread">Unread</label>
+                        </div>
+                        
+                        <div class="radio">
+                            <input type="radio" id="dropped" name="radio" value="dropped">
+                            <label for="dropped">Dropped</label>
+                        </div>
+                        
+                        <div class="radio">
+                            <input type="radio" id="finished" name="radio" value="finished">
+                            <label for="finished">Finished</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
 
             <button type="submit" class=submit>Submit</button>
         </form>
       </dialog>
-    <button class="new">New Book</button>
     <div class="book-container"></div>
 </body>
 </html>

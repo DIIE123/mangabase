@@ -1,12 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --main-color: rgb(17, 125, 213);
+}
+
+body {
+    background-color: var(--main-color);
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
 body, h1, h2, h3, p {
     padding: 0;
     margin: 0;
-    text-align: center;
 }
 
 header {
+    text-align: center;
+    font-family: "Poetsen One", Arial, Helvetica, sans-serif;
     font-size: 3rem;
     padding: 3rem;
+    color: white;
 }
 
 .book-container {
@@ -16,25 +29,58 @@ header {
     gap: 3rem;
 }
 
-.book {
-    width: 15rem;
-    height: 20rem;
-    border: 2px solid black;
-    border-radius: 10px;
+.new {
+    cursor: pointer;
+    font-size: 10rem;
+}
 
+.book, .new {
+    background-color: rgb(255, 255, 255);
+
+    width: 15rem;
+    height: 22.5rem;
+    border: 3px solid black;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition: 0.2s;
     position: relative;
 }
 
-.pages {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
+.book:hover, .new:hover {
+    transform: scale(110%);
 }
 
-.read {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
+.book {
+    box-sizing: border-box;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.image {
+    margin: 0 auto;
+    width: 75%;
+    height: 60%;
+    border: 2px solid black;
+}
+
+.title {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.author {
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.chapters, .status {
+    font-family: "Ubuntu", Arial, Helvetica, sans-serif;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
 }
 
 .delete {
@@ -45,14 +91,64 @@ header {
     cursor: pointer;
 
     position: absolute;
-    top: 0.75rem;
+    bottom: 0.75rem;
     right: 0.75rem;
+}
+
+dialog {
+    width: 25rem;
+    height: 27.5rem;
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
 form {
     display: flex;
     flex-direction: column;
     text-align: left;
+    gap: 1rem;
+}
+
+input[type="text"], input[type="number"] {
+    height: 1.5rem;
+    border-radius: 10px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border: 2px solid var(--main-color);
+}
+
+.close {
+    cursor: pointer;
+    background: none;
+    align-self: flex-end;
+    border: none;
+
+    font-size: 1.25rem;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit {
+    color: white;
+    background-color: var(--main-color);
+
+    font-family: inherit;
+    font-size: 1.25rem;
+
+    cursor: pointer;
+    align-self: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 25px;
 }
 
 .required:after {
