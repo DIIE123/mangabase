@@ -74,6 +74,10 @@ form.addEventListener("submit", (event) => {
 // Display Books
 function displayBooks() {
     container.textContent = "";
+
+    // Add Books
+    myLibrary.forEach((book) => createBookObject(book));
+
     // Add New Button
     const newButton = document.createElement("button");
     newButton.textContent = "+";
@@ -82,9 +86,6 @@ function displayBooks() {
         dialog.showModal();
     });
     container.append(newButton);
-
-    // Add Books
-    myLibrary.forEach((book) => createBookObject(book));    
 }
 
 function createBookObject(book) {
@@ -132,6 +133,8 @@ function createImage(book) {
         image.src = "./assets/not-found.png";
     }
     image.alt = "Book Cover";
+    image.width = "8.5rem";
+    image.height = "12rem";
     image.classList.add("image");
     return image;
 }
@@ -148,7 +151,7 @@ function createStatus(book) {
     if (statusText.textContent === "Dropped") {
         statusText.style.color = "goldenrod";
     }
-    if (statusText.textContent === "Finished") {
+    if (statusText.textContent === "Read") {
         statusText.style.color = "green";
     }
 
@@ -170,7 +173,7 @@ function createDelete(book) {
 }
 
 // Testing
-addBookToLibrary("Land of the Lustrous", "Haruko Ichikawa", 10, "Finished", "https://m.media-amazon.com/images/I/91EKWaQmLKL._AC_UF1000,1000_QL80_.jpg");
-addBookToLibrary("test2", "me", 20, "Unread", "");
-addBookToLibrary("test3", "me", 30, "Unread", "");
+addBookToLibrary("Land of the Lustrous", "Haruko Ichikawa", 108, "Read", "https://m.media-amazon.com/images/I/91EKWaQmLKL._AC_UF1000,1000_QL80_.jpg");
+addBookToLibrary("The Apothecary Diaries", "Hyuuga Natsu", 79, "Dropped", "https://fyre.cdn.sewest.net/manga-books/610a98295098f700127db932/cover_img_247x350_theapothecarydiaries_01_coverfinal-ojQWEpum9.jpg?quality=85&width=768");
+addBookToLibrary("Frieren: Beyond Journey's End", "Abe Tsukasa", 140, "Unread", "https://temp.compsci88.com/cover/normal/01J76XYDGDQERFSK333582BNBZ.webp");
 displayBooks();

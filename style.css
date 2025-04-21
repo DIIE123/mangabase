@@ -32,6 +32,7 @@ header {
 .new {
     cursor: pointer;
     font-size: 10rem;
+    justify-content: center;
 }
 
 .book, .new {
@@ -43,7 +44,6 @@ header {
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 
     transition: 0.2s;
     position: relative;
@@ -61,8 +61,8 @@ header {
 
 .image {
     margin: 0 auto;
-    width: 75%;
-    height: 60%;
+    width: 8.5rem;
+    height: 12rem;
     border: 2px solid black;
 }
 
@@ -103,6 +103,8 @@ dialog {
 }
 
 form {
+    font-family: "Poetsen One", "Roboto", Arial, Helvetica, sans-serif;
+
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -110,12 +112,16 @@ form {
 }
 
 input[type="text"], input[type="number"] {
-    height: 1.5rem;
+    height: 1.5lh;
+    border: 2px solid grey;
     border-radius: 10px;
+    outline: none;
+    transition: 0.2s;
 }
 
 input[type="text"]:focus, input[type="number"]:focus {
     border: 2px solid var(--main-color);
+    box-shadow: 2px 2px grey;
 }
 
 .close {
@@ -135,6 +141,18 @@ input[type="text"]:focus, input[type="number"]:focus {
 .status-container {
     display: flex;
     justify-content: space-between;
+}
+
+#unread + label {
+    color: red;
+}
+
+#dropped + label {
+    color: goldenrod;
+}
+
+#read + label {
+    color: green;
 }
 
 .submit {
