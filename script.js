@@ -20,10 +20,22 @@ function Book(title, author, chapters, status, image) {
     this.title = title;
     this.author = author;
     this.chapters = chapters;
-    this.status = status;
     this.image = image;
     this.id = crypto.randomUUID();
+
+    this.statusIndex = this.statusArray.indexOf(status);
+    this.status = status;
 }
+
+// Prototype Attributes
+Book.prototype.statusArray = [ "Unread", "In Progress", "Read" ]; 
+Book.prototype.toggleStatus = function() {
+    console.log(this.statusIndex);
+    ++this.statusIndex;
+    if (this.statusIndex > 2) this.statusIndex = 0;
+    this.status = this.statusArray[this.statusIndex];
+    
+};
 
 // Add Book to Library
 function addBookToLibrary(title, author, chapters, status, image) {
@@ -36,6 +48,14 @@ function removeBookFromLibrary(id) {
     myLibrary.forEach((book, index) => {
         if (book.id === id) {
             myLibrary.splice(index, 1);
+        }
+    });
+}
+
+function toggleBookStatus(id) {
+    myLibrary.forEach((book) => {
+        if (book.id === id) {
+            book.toggleStatus();
         }
     });
 }
@@ -89,38 +109,26 @@ function displayBooks() {
 }
 
 function createBookObject(book) {
-    // Create Book
+    // Create Book Object
     const bookObject = document.createElement("div");
     bookObject.classList.add("book");
 
-    // Create Image
+    // Create Buttons (Toggle, Delete)
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container");
+
+    buttonContainer.append(createToggleStatus(book));
+    buttonContainer.append(createDelete(book));
+    bookObject.append(buttonContainer);
+    
+    // Create Image and Text
     bookObject.append(createImage(book));
-
-    // Create Title
-    const title = document.createElement("h1");
-    title.classList.add("title");
-    title.textContent = book.title;
-    bookObject.append(title);
-
-    // Create Author
-    const author = document.createElement("p");
-    author.classList.add("author");
-    author.textContent = book.author;
-    bookObject.append(author);
-
-    // Create Chapters
-    const chapters = document.createElement("p");
-    chapters.classList.add("chapters");
-    chapters.textContent = `Chapters: ${book.chapters}`;
-    bookObject.append(chapters);
-
-    // Create Status
+    bookObject.append(createTitle(book));
+    bookObject.append(createAuthor(book));
+    bookObject.append(createChapters(book));
     bookObject.append(createStatus(book));
 
-    // Create Delete Button
-    bookObject.append(createDelete(book));
-
-    // Add to Container
+    // Add Book Object to Container
     container.append(bookObject);
 }
 
@@ -139,16 +147,37 @@ function createImage(book) {
     return image;
 }
 
+function createTitle(book) {
+    const title = document.createElement("h1");
+    title.classList.add("title");
+    title.textContent = book.title;
+    return title;
+}
+
+function createAuthor(book) {
+    const author = document.createElement("p");
+    author.classList.add("author");
+    author.textContent = book.author;
+    return author;
+}
+
+function createChapters(book) {
+    const chapters = document.createElement("p");
+    chapters.classList.add("chapters");
+    chapters.textContent = `Chapters: ${book.chapters}`;
+    return chapters;
+}
+
 function createStatus(book) {
     const status = document.createElement("p");
     status.classList.add("status");
     const statusText = document.createElement("span");
-    statusText.textContent = book.status.charAt(0).toUpperCase() + book.status.slice(1);
+    statusText.textContent = book.status;
 
     if (statusText.textContent === "Unread") {
         statusText.style.color = "red";
     }
-    if (statusText.textContent === "Dropped") {
+    if (statusText.textContent === "In Progress") {
         statusText.style.color = "goldenrod";
     }
     if (statusText.textContent === "Read") {
@@ -165,6 +194,7 @@ function createDelete(book) {
     del.innerHTML = "<img height=\"32px\" width=\"32px\" src=\"./assets/delete.svg\">";
     del.classList.add("delete");
     del.dataset.id = book.id;
+    del.title = "Delete Book";
     del.addEventListener("click", (event) => {
         removeBookFromLibrary(event.currentTarget.dataset.id);
         displayBooks();
@@ -172,8 +202,23 @@ function createDelete(book) {
     return del;
 }
 
+function createToggleStatus(book) {
+    const toggle = document.createElement("button");
+    toggle.innerHTML = "<img height=\"32px\" width=\"32px\" src=\"./assets/toggle.svg\">";
+    toggle.classList.add("toggle");
+    toggle.dataset.id = book.id;
+    toggle.title = "Toggle Status";
+
+    toggle.addEventListener("click", (event) => {
+        toggleBookStatus(event.currentTarget.dataset.id);
+        displayBooks();
+    });
+
+    return toggle;
+}
+
 // Testing
 addBookToLibrary("Land of the Lustrous", "Haruko Ichikawa", 108, "Read", "https://m.media-amazon.com/images/I/91EKWaQmLKL._AC_UF1000,1000_QL80_.jpg");
-addBookToLibrary("The Apothecary Diaries", "Hyuuga Natsu", 79, "Dropped", "https://fyre.cdn.sewest.net/manga-books/610a98295098f700127db932/cover_img_247x350_theapothecarydiaries_01_coverfinal-ojQWEpum9.jpg?quality=85&width=768");
-addBookToLibrary("Frieren: Beyond Journey's End", "Abe Tsukasa", 140, "Unread", "https://temp.compsci88.com/cover/normal/01J76XYDGDQERFSK333582BNBZ.webp");
+addBookToLibrary("The Apothecary Diaries", "Natsu Hyuuga, Nekokurage", 79, "In Progress", "https://fyre.cdn.sewest.net/manga-books/610a98295098f700127db932/cover_img_247x350_theapothecarydiaries_01_coverfinal-ojQWEpum9.jpg?quality=85&width=768");
+addBookToLibrary("Frieren: Beyond Journey's End", "Kanehito Yamada, Tsukasa Abe", 140, "Unread", "https://temp.compsci88.com/cover/normal/01J76XYDGDQERFSK333582BNBZ.webp");
 displayBooks();

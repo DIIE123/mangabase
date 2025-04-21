@@ -9,9 +9,13 @@ body {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
-body, h1, h2, h3, p {
+body, h1, p, div {
     padding: 0;
     margin: 0;
+}
+
+h1, p {
+    padding: 0 2rem;
 }
 
 header {
@@ -27,6 +31,7 @@ header {
     justify-content: center;
     flex-wrap: wrap;
     gap: 3rem;
+    margin-bottom: 2rem;
 }
 
 .new {
@@ -38,10 +43,12 @@ header {
 .book, .new {
     background-color: rgb(255, 255, 255);
 
-    width: 15rem;
-    height: 22.5rem;
-    border: 3px solid black;
+    width: 17.5rem;
+    height: 25rem;
+
     border-radius: 15px;
+    box-shadow: 10px 10px rgb(44, 59, 116);
+
     display: flex;
     flex-direction: column;
 
@@ -55,14 +62,13 @@ header {
 
 .book {
     box-sizing: border-box;
-    padding: 1rem;
     overflow: auto;
 }
 
 .image {
     margin: 0 auto;
-    width: 8.5rem;
-    height: 12rem;
+    width: 10rem;
+    height: 14rem;
     border: 2px solid black;
 }
 
@@ -83,16 +89,29 @@ header {
     font-size: 0.9rem;
 }
 
-.delete {
+.status {
+    margin-bottom: 1rem;
+}
+
+.button-container {
+    background-color: rgb(209, 228, 255);
+    padding-top: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.2rem;
+
+    position: sticky;
+    top: 0rem;
+}
+
+.delete, .toggle {
     padding: 0;
     margin: 0;
     background-color: transparent;
     border: 0;
     cursor: pointer;
-
-    position: absolute;
-    bottom: 0.75rem;
-    right: 0.75rem;
 }
 
 dialog {
@@ -147,7 +166,7 @@ input[type="text"]:focus, input[type="number"]:focus {
     color: red;
 }
 
-#dropped + label {
+#progress + label {
     color: goldenrod;
 }
 
