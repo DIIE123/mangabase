@@ -12,6 +12,8 @@ const form = document.querySelector("form")
 const titleForm = document.querySelector("#title");
 const authorForm = document.querySelector("#author");
 const chaptersForm = document.querySelector("#chapters");
+const maxForm = document.querySelector("#max");
+const ratingForm = document.querySelector("#rating");
 const imageForm = document.querySelector("#image");
 const statusForm = document.querySelectorAll('input[type="radio"]');
 
@@ -20,10 +22,12 @@ const statusForm = document.querySelectorAll('input[type="radio"]');
 class Book {
     static statusArray = [ "Unread", "In Progress", "Read" ]; 
 
-    constructor(title, author, chapters, status, image) {
+    constructor(title, author, chapters, max, rating, status, image) {
         this.title = title;
         this.author = author;
         this.chapters = chapters;
+        this.max = max;
+        this.rating = rating;
         this.image = image;
         this.id = crypto.randomUUID();
 
@@ -39,8 +43,8 @@ class Book {
 }
 
 // Add Book to Library
-function addBookToLibrary(title, author, chapters, status, image) {
-    const newBook = new Book(title, author, chapters, status, image);
+function addBookToLibrary(title, author, chapters, max, rating, status, image) {
+    const newBook = new Book(title, author, chapters, max, rating, status, image);
     myLibrary.push(newBook);
 }
 
@@ -81,6 +85,8 @@ form.addEventListener("submit", (event) => {
     const title = titleForm.value;
     const author = authorForm.value;
     const chapters = chaptersForm.value;
+    const max = maxForm.value;
+    const rating = ratingForm.value;
     const image = imageForm.value;
     let status;
     for (let i = 0; i < statusForm.length; ++i) {
@@ -90,7 +96,7 @@ form.addEventListener("submit", (event) => {
     }
 
     // Add Book to Library and Display
-    addBookToLibrary(title, author, chapters, status, image);
+    addBookToLibrary(title, author, chapters, max, rating, status, image);
     displayBooks();
 
     form.reset();
@@ -127,6 +133,7 @@ function createBookObject(book) {
     textContainer.append(createTitle(book));
     textContainer.append(createAuthor(book));
     textContainer.append(createChapters(book));
+    textContainer.append(createRating(book));
     textContainer.append(createStatus(book));
     bookObject.append(textContainer);
 
@@ -166,8 +173,26 @@ function createAuthor(book) {
 function createChapters(book) {
     const chapters = document.createElement("p");
     chapters.classList.add("chapters");
-    chapters.textContent = `Chapters: ${book.chapters}`;
+
+    let chaptersText = 0;
+    let maxText = "?";
+    if (book.chapters) chaptersText = book.chapters;
+    if (book.max) maxText = book.max;
+
+    chapters.textContent = `Chapters: ${chaptersText} / ${maxText}`;
     return chapters;
+}
+
+function createRating(book) {
+    const rating = document.createElement("p");
+    rating.classList.add("rating");
+
+    let ratingText = "-";
+    if (book.rating) ratingText = book.rating;
+
+    rating.textContent = `Rating: ${ratingText}`;
+    rating.append(createIcon("./assets/star.svg", 12, 12));
+    return rating;
 }
 
 function createStatus(book) {
@@ -193,7 +218,7 @@ function createStatus(book) {
 
 function createDelete(book) {
     const del = document.createElement("button");
-    del.innerHTML = "<img height=\"32px\" width=\"32px\" src=\"./assets/delete.svg\">";
+    del.append(createIcon("./assets/delete.svg", 32, 32));
     del.classList.add("delete");
     del.dataset.id = book.id;
     del.title = "Delete Book";
@@ -206,7 +231,7 @@ function createDelete(book) {
 
 function createToggleStatus(book) {
     const toggle = document.createElement("button");
-    toggle.innerHTML = "<img height=\"32px\" width=\"32px\" src=\"./assets/toggle.svg\">";
+    toggle.append(createIcon("./assets/toggle.svg", 32, 32));
     toggle.classList.add("toggle");
     toggle.dataset.id = book.id;
     toggle.title = "Toggle Status";
@@ -219,8 +244,21 @@ function createToggleStatus(book) {
     return toggle;
 }
 
+function createRatingHeader(book) {
+
+}
+
+function createIcon(src, width, height) {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "Icon";
+    img.width = width;
+    img.height = height;
+    return img;
+}
+
 // Testing
-addBookToLibrary("Land of the Lustrous", "Haruko Ichikawa", 108, "Read", "https://m.media-amazon.com/images/I/91EKWaQmLKL._AC_UF1000,1000_QL80_.jpg");
-addBookToLibrary("The Apothecary Diaries", "Natsu Hyuuga, Nekokurage", 79, "In Progress", "https://fyre.cdn.sewest.net/manga-books/610a98295098f700127db932/cover_img_247x350_theapothecarydiaries_01_coverfinal-ojQWEpum9.jpg?quality=85&width=768");
-addBookToLibrary("Frieren: Beyond Journey's End", "Kanehito Yamada, Tsukasa Abe", 140, "Unread", "https://temp.compsci88.com/cover/normal/01J76XYDGDQERFSK333582BNBZ.webp");
+addBookToLibrary("Land of the Lustrous", "Haruko Ichikawa", 108, 108, 10, "Read", "https://m.media-amazon.com/images/I/91EKWaQmLKL._AC_UF1000,1000_QL80_.jpg");
+addBookToLibrary("The Apothecary Diaries", "Natsu Hyuuga, Nekokurage", 50, "", 8, "In Progress", "https://fyre.cdn.sewest.net/manga-books/610a98295098f700127db932/cover_img_247x350_theapothecarydiaries_01_coverfinal-ojQWEpum9.jpg?quality=85&width=768");
+addBookToLibrary("Frieren: Beyond Journey's End", "Kanehito Yamada, Tsukasa Abe", "", "", "", "Unread", "https://temp.compsci88.com/cover/normal/01J76XYDGDQERFSK333582BNBZ.webp");
 displayBooks();
