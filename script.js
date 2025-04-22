@@ -15,27 +15,27 @@ const imageForm = document.querySelector("#image");
 const statusForm = document.querySelectorAll('input[type="radio"]');
 
 // Organization Functions
-// Book Object
-function Book(title, author, chapters, status, image) {
-    this.title = title;
-    this.author = author;
-    this.chapters = chapters;
-    this.image = image;
-    this.id = crypto.randomUUID();
+// Book Class
+class Book {
+    static statusArray = [ "Unread", "In Progress", "Read" ]; 
 
-    this.statusIndex = this.statusArray.indexOf(status);
-    this.status = status;
+    constructor(title, author, chapters, status, image) {
+        this.title = title;
+        this.author = author;
+        this.chapters = chapters;
+        this.image = image;
+        this.id = crypto.randomUUID();
+
+        this.statusIndex = Book.statusArray.indexOf(status);
+        this.status = status;
+    }
+
+    toggleStatus = () => {
+        ++this.statusIndex;
+        if (this.statusIndex > 2) this.statusIndex = 0;
+        this.status = Book.statusArray[this.statusIndex];
+    }
 }
-
-// Prototype Attributes
-Book.prototype.statusArray = [ "Unread", "In Progress", "Read" ]; 
-Book.prototype.toggleStatus = function() {
-    console.log(this.statusIndex);
-    ++this.statusIndex;
-    if (this.statusIndex > 2) this.statusIndex = 0;
-    this.status = this.statusArray[this.statusIndex];
-    
-};
 
 // Add Book to Library
 function addBookToLibrary(title, author, chapters, status, image) {
