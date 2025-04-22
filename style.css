@@ -2,6 +2,7 @@
 
 :root {
     --main-color: rgb(17, 125, 213);
+    --secondary-color: rgb(44, 59, 116);
 }
 
 body {
@@ -14,16 +15,18 @@ body, h1, p, div {
     margin: 0;
 }
 
-h1, p {
-    padding: 0 2rem;
-}
-
 header {
     text-align: center;
     font-family: "Poetsen One", Arial, Helvetica, sans-serif;
     font-size: 3rem;
-    padding: 3rem;
+    margin: 2rem 0;
+    padding: 1rem;
     color: white;
+
+    position: sticky;
+    top: 0rem;
+    z-index: 1;
+    background-color: var(--main-color);
 }
 
 .book-container {
@@ -35,22 +38,22 @@ header {
 }
 
 .new {
+    width: 5rem;
+    height: 5rem;
+    margin-left: 1rem;
+
+    font-size: 4rem;
+    color: var(--secondary-color);
+
+    border: none;
     cursor: pointer;
-    font-size: 10rem;
-    justify-content: center;
 }
 
 .book, .new {
     background-color: rgb(255, 255, 255);
 
-    width: 17.5rem;
-    height: 25rem;
-
     border-radius: 15px;
-    box-shadow: 10px 10px rgb(44, 59, 116);
-
-    display: flex;
-    flex-direction: column;
+    box-shadow: 10px 10px var(--secondary-color);
 
     transition: 0.2s;
     position: relative;
@@ -61,11 +64,16 @@ header {
 }
 
 .book {
+    width: 25rem;
+    height: 20rem;
     box-sizing: border-box;
-    overflow: auto;
+
+    display: grid;
+    grid-template: 1fr 4fr / 1fr 1fr;
 }
 
 .image {
+    
     margin: 0 auto;
     width: 10rem;
     height: 14rem;
@@ -95,15 +103,15 @@ header {
 
 .button-container {
     background-color: rgb(209, 228, 255);
-    padding-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding-right: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
 
     display: flex;
     justify-content: flex-end;
     gap: 0.2rem;
 
-    position: sticky;
-    top: 0rem;
+    grid-column: span 2;
 }
 
 .delete, .toggle {
@@ -112,6 +120,10 @@ header {
     background-color: transparent;
     border: 0;
     cursor: pointer;
+}
+
+.text-container {
+    overflow: auto;
 }
 
 dialog {
@@ -185,7 +197,15 @@ input[type="text"]:focus, input[type="number"]:focus {
     align-self: center;
     width: 10rem;
     height: 3rem;
+    border: none;
     border-radius: 25px;
+    box-shadow: 4px 7px var(--secondary-color);
+    transition: 0.2s;
+}
+
+.submit:active {
+    box-shadow: none;
+    transform: translate(4px, 7px);
 }
 
 .required:after {

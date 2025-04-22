@@ -4,6 +4,7 @@ const myLibrary = [];
 // Document Objects
 const container = document.querySelector(".book-container");
 const dialog = document.querySelector("dialog");
+const newButton = document.querySelector(".new");
 const closeButton = document.querySelector(".close");
 const form = document.querySelector("form")
 
@@ -61,6 +62,11 @@ function toggleBookStatus(id) {
 }
 
 // Event Listeners
+// Open New Book Dialog
+newButton.addEventListener("click", () => {
+    dialog.showModal();
+});
+
 // Close New Book Dialog
 closeButton.addEventListener("click", () => {
     form.reset();
@@ -97,15 +103,6 @@ function displayBooks() {
 
     // Add Books
     myLibrary.forEach((book) => createBookObject(book));
-
-    // Add New Button
-    const newButton = document.createElement("button");
-    newButton.textContent = "+";
-    newButton.classList.add("new");
-    newButton.addEventListener("click", () => {
-        dialog.showModal();
-    });
-    container.append(newButton);
 }
 
 function createBookObject(book) {
@@ -122,17 +119,22 @@ function createBookObject(book) {
     bookObject.append(buttonContainer);
     
     // Create Image and Text
-    bookObject.append(createImage(book));
-    bookObject.append(createTitle(book));
-    bookObject.append(createAuthor(book));
-    bookObject.append(createChapters(book));
-    bookObject.append(createStatus(book));
+    bookObject.append(createCover(book));
+
+    const textContainer = document.createElement("div");
+    textContainer.classList.add("text-container");
+
+    textContainer.append(createTitle(book));
+    textContainer.append(createAuthor(book));
+    textContainer.append(createChapters(book));
+    textContainer.append(createStatus(book));
+    bookObject.append(textContainer);
 
     // Add Book Object to Container
     container.append(bookObject);
 }
 
-function createImage(book) {
+function createCover(book) {
     let image = document.createElement("img");
     if (book.image) {
         image.src = book.image;
